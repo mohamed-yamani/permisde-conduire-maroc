@@ -1,8 +1,5 @@
 package com.permis.permisdeconduiremaroc
 
-import ContentFor
-import NavigationDrawr
-import TopBar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -14,10 +11,12 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.permis.permisdeconduiremaroc.ui.components.TopBar
+import com.permis.permisdeconduiremaroc.ui.navigation.ContentFor
+import com.permis.permisdeconduiremaroc.ui.navigation.NavigationDrawr
+import com.permis.permisdeconduiremaroc.ui.navigation.navItems
 import com.permis.permisdeconduiremaroc.ui.theme.AppFontFamily
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import navItems
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +53,13 @@ fun App() {
 
         var selectedItem by remember { mutableStateOf(navItems[0]) }
 
+        val onNavigate: (String) -> Unit = { destination ->
+            val navItem = navItems.find { it.title == destination }
+            if (navItem != null) {
+                selectedItem = navItem
+            }
+        }
+
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
@@ -76,7 +82,7 @@ fun App() {
                 ) }
             ) { paddingValues ->
                 Column(modifier = Modifier.padding(paddingValues)) {
-                    ContentFor(selectedItem.title)
+                    ContentFor(selectedItem.title, onNavigate)
                 }
             }
         }

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.permis.permisdeconduiremaroc.ui.strings.AppStrings
 
 @Composable
 fun ContinueLearningCard(
@@ -33,9 +34,12 @@ fun ContinueLearningCard(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text("Continuer l'apprentissage", style = MaterialTheme.typography.titleMedium)
             Text(
-                "Dernière leçon: $lastLessonTitle",
+                AppStrings.CONTINUE_LEARNING,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                "${AppStrings.LAST_LESSON_PREFIX}$lastLessonTitle",
                 style = MaterialTheme.typography.bodyMedium
             )
             Row(
@@ -43,8 +47,12 @@ fun ContinueLearningCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                FilledTonalButton(onClick = onContinueLesson) { Text("Reprendre le cours") }
-                Button(onClick = onResumeQcm) { Text("Reprendre QCM") }
+                FilledTonalButton(onClick = onContinueLesson) {
+                    Text(AppStrings.RESUME_COURSE)
+                }
+                Button(onClick = onResumeQcm) {
+                    Text(AppStrings.RESUME_QCM)
+                }
             }
         }
     }

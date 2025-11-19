@@ -19,10 +19,11 @@ import com.permis.permisdeconduiremaroc.ui.components.HomeActionButtons
 import com.permis.permisdeconduiremaroc.ui.components.HomeShortcutsRow
 import com.permis.permisdeconduiremaroc.ui.components.StatsCard
 import com.permis.permisdeconduiremaroc.ui.components.WelcomeCard
+import com.permis.permisdeconduiremaroc.ui.navigation.NavigationDestinations
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(onNavigate: (String) -> Unit) {
     val scrollState = rememberScrollState()
     Box(
         modifier = Modifier.background(
@@ -35,12 +36,19 @@ fun HomeScreen() {
         ) {
             WelcomeCard()
             HomeActionButtons(
-                onCoursesClick = { },
-                onQCMClicked = { }
+                onCoursesClick = { onNavigate(NavigationDestinations.COURSES) },
+                onQCMClicked = { onNavigate(NavigationDestinations.QCM) },
             )
             StatsCard()
-            ContinueLearningCard()
-            HomeShortcutsRow()
+            ContinueLearningCard(
+                onContinueLesson = { onNavigate(NavigationDestinations.COURSES) },
+                onResumeQcm = { onNavigate(NavigationDestinations.QCM) }
+            )
+            HomeShortcutsRow(
+                onSignsClick = { /* Navigate to signs screen */ },
+                onMistakesClick = { /* Navigate to mistakes screen */ },
+                onFavoritesClick = { /* Navigate to favorites screen */ }
+            )
             DailyChallengeCard()
         }
     }
@@ -49,5 +57,5 @@ fun HomeScreen() {
 @Composable
 @Preview
 private fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(onNavigate = { })
 }

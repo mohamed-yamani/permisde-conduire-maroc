@@ -12,28 +12,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.permis.permisdeconduiremaroc.ui.strings.AppStrings
 
 @Composable
 fun DailyChallengeCard(
     questionCount: Int = 10,
     onStart: () -> Unit = {}
 ) {
-    Card (
+    Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Column (modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)){
-            Text("Challenge du jour", style = MaterialTheme.typography.titleMedium)
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Text(
-                "Combien de questions avez-vous répondu correctement ce jour-ci?",
+                AppStrings.DAILY_CHALLENGE,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                AppStrings.CHALLENGE_DESCRIPTION,
                 style = MaterialTheme.typography.bodyMedium
             )
-            Button(onClick = onStart) { Text("Commencer") }
+            Button(onClick = onStart) {
+                Text(AppStrings.START_CHALLENGE)
+            }
             Text(
-                "Il vous reste $questionCount questions",
+                "${AppStrings.QUESTIONS_REMAINING_PREFIX}$questionCount${AppStrings.QUESTIONS_REMAINING_SUFFIX}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }

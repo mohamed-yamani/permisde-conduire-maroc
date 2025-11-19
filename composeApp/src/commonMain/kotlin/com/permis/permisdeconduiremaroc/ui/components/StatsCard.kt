@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.permis.permisdeconduiremaroc.ui.strings.AppStrings
 
 @Composable
 fun StatsCard(
@@ -21,7 +22,7 @@ fun StatsCard(
     accuracy: Float = 0.78f,
     streakDays: Int = 3
 ) {
-    return Card(
+    Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
         ),
@@ -32,21 +33,24 @@ fun StatsCard(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text("Votre Progression", style = MaterialTheme.typography.titleMedium)
             Text(
-                "Cours terminés: ${(completion * 100).toInt()}%",
+                AppStrings.YOUR_PROGRESS,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                "${AppStrings.COURSES_COMPLETED_PREFIX}${(completion * 100).toInt()}${AppStrings.COURSES_COMPLETED_SUFFIX}",
                 style = MaterialTheme.typography.bodyMedium
             )
             LinearProgressIndicator(progress = { completion })
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "Précision: ${(accuracy * 100).toInt()}%",
+                "${AppStrings.ACCURACY_PREFIX}${(accuracy * 100).toInt()}${AppStrings.ACCURACY_SUFFIX}",
                 style = MaterialTheme.typography.bodyMedium
             )
             LinearProgressIndicator(progress = { accuracy })
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                "Durée de la dernière série: $streakDays jours",
+                "${AppStrings.STREAK_DAYS_PREFIX}$streakDays${AppStrings.STREAK_DAYS_SUFFIX}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
