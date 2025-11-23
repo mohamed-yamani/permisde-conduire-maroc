@@ -1,27 +1,17 @@
 package com.permis.permisdeconduiremaroc
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
-import com.permis.permisdeconduiremaroc.ui.components.TopBar
-import com.permis.permisdeconduiremaroc.ui.navigation.ContentFor
 import com.permis.permisdeconduiremaroc.ui.navigation.HomeScreenVoyager
-import com.permis.permisdeconduiremaroc.ui.navigation.NavigationDrawr
 import com.permis.permisdeconduiremaroc.ui.navigation.navItems
-import com.permis.permisdeconduiremaroc.ui.screens.HomeScreen
 import com.permis.permisdeconduiremaroc.ui.theme.AppFontFamily
+import com.permis.permisdeconduiremaroc.ui.viewmodel.rememberAppViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,19 +40,20 @@ fun App() {
             )
         }
     ) {
+        // Get ViewModel instance
+        val viewModel = rememberAppViewModel()
+        val state by viewModel.state
 
-        var selectedItem by remember { mutableStateOf(navItems[0]) }
-        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+        val drawerState = rememberDrawerState(initialValue = state.drawerValue)
         val scope = rememberCoroutineScope()
-
 
         val homeScreen = remember {
             HomeScreenVoyager(
                 drawerState = drawerState,
                 scope = scope,
-                getSelectedItem = { selectedItem },
+                getSelectedItem = { state.selectedNavItem },
                 onSelectedItemChange = { item ->
-                    selectedItem = item
+                    viewModel.selectNavItem(item)
                 }
             )
         }
