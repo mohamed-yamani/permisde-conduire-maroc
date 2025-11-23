@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.permis.permisdeconduiremaroc.ui.navigation.NavItem
 import com.permis.permisdeconduiremaroc.ui.state.AppState
+import androidx.compose.runtime.State
 
 class AppViewModel {
     private val _state = mutableStateOf(AppState.Default)
@@ -13,9 +14,7 @@ class AppViewModel {
     /**
      * Current app state - read-only
      */
-    val state: AppState
-        get() = _state.value
-
+    val state: State<AppState> = _state
 
     /**
      * Select a navigation item (e.g., from drawer)

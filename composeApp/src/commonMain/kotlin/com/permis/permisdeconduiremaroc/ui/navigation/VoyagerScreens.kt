@@ -24,32 +24,31 @@ import com.permis.permisdeconduiremaroc.ui.screens.FavoritesScreen
 import com.permis.permisdeconduiremaroc.ui.screens.MistakesScreen
 import com.permis.permisdeconduiremaroc.ui.screens.SignsScreen
 import com.permis.permisdeconduiremaroc.ui.strings.AppStrings
-
-// ... existing code ...
-
 import androidx.compose.material3.DrawerState
+import androidx.compose.runtime.getValue
+import com.permis.permisdeconduiremaroc.di.getAppViewModel
+import com.permis.permisdeconduiremaroc.ui.viewmodel.AppViewModel
 import kotlinx.coroutines.CoroutineScope
 
 // Add this class for HomeScreen with parameters
 class HomeScreenVoyager(
     val drawerState: DrawerState,
     val scope: CoroutineScope,
-    private val getSelectedItem: () -> NavItem,
-    val onSelectedItemChange: (NavItem) -> Unit
 ) : Screen {
-
     override val key: String = "home_screen"
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+        val viewModel: AppViewModel = getAppViewModel()
+        val state by viewModel.state
 
-        val selectedItem = getSelectedItem()
+        val selectedItem = state.selectedNavItem
 
         val onNavigate: (String) -> Unit = { destination ->
             val navItem = navItems.find { it.title == destination }
             if (navItem != null) {
-                onSelectedItemChange(navItem)
+                viewModel.selectNavItem(navItem)
             }
         }
 
@@ -62,7 +61,7 @@ class HomeScreenVoyager(
                     navItems = navItems,
                     selectedItem = selectedItem,
                     onItemClick = { item ->
-                        onSelectedItemChange(item)
+                        viewModel.selectNavItem(item)
                     }
                 )
             }

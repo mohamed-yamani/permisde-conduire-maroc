@@ -15,7 +15,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -25,7 +25,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
@@ -46,6 +46,8 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)
             implementation(libs.voyager.transitions)
+
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

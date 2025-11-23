@@ -1,24 +1,21 @@
 package com.permis.permisdeconduiremaroc
 
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
-import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
+import com.permis.permisdeconduiremaroc.di.getAppViewModel
 import com.permis.permisdeconduiremaroc.ui.navigation.HomeScreenVoyager
-import com.permis.permisdeconduiremaroc.ui.navigation.navItems
 import com.permis.permisdeconduiremaroc.ui.theme.AppFontFamily
-import com.permis.permisdeconduiremaroc.ui.viewmodel.rememberAppViewModel
+import com.permis.permisdeconduiremaroc.ui.viewmodel.AppViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
-
-
     MaterialTheme(
         typography = MaterialTheme.typography.let { t ->
             t.copy(
@@ -40,8 +37,9 @@ fun App() {
             )
         }
     ) {
-        // Get ViewModel instance
-        val viewModel = rememberAppViewModel()
+        // Get ViewModel from Koin using GlobalContext
+        val viewModel : AppViewModel = getAppViewModel()
+        
         val state by viewModel.state
 
         val drawerState = rememberDrawerState(initialValue = state.drawerValue)
@@ -51,10 +49,6 @@ fun App() {
             HomeScreenVoyager(
                 drawerState = drawerState,
                 scope = scope,
-                getSelectedItem = { state.selectedNavItem },
-                onSelectedItemChange = { item ->
-                    viewModel.selectNavItem(item)
-                }
             )
         }
 
