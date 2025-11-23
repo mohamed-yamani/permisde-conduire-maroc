@@ -13,17 +13,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.permis.permisdeconduiremaroc.ui.components.ContinueLearningCard
 import com.permis.permisdeconduiremaroc.ui.components.DailyChallengeCard
 import com.permis.permisdeconduiremaroc.ui.components.HomeActionButtons
 import com.permis.permisdeconduiremaroc.ui.components.HomeShortcutsRow
 import com.permis.permisdeconduiremaroc.ui.components.StatsCard
 import com.permis.permisdeconduiremaroc.ui.components.WelcomeCard
+import com.permis.permisdeconduiremaroc.ui.navigation.FavoritesScreenVoyager
+import com.permis.permisdeconduiremaroc.ui.navigation.MistakesScreenVoyager
 import com.permis.permisdeconduiremaroc.ui.navigation.NavigationDestinations
+import com.permis.permisdeconduiremaroc.ui.navigation.SignsScreenVoyager
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeScreen(onNavigate: (String) -> Unit) {
+    val navigator = LocalNavigator.currentOrThrow
     val scrollState = rememberScrollState()
     Box(
         modifier = Modifier.background(
@@ -45,9 +51,9 @@ fun HomeScreen(onNavigate: (String) -> Unit) {
                 onResumeQcm = { onNavigate(NavigationDestinations.QCM) }
             )
             HomeShortcutsRow(
-                onSignsClick = { /* Navigate to signs screen */ },
-                onMistakesClick = { /* Navigate to mistakes screen */ },
-                onFavoritesClick = { /* Navigate to favorites screen */ }
+                onSignsClick = { navigator.push(SignsScreenVoyager) },
+                onMistakesClick = { navigator.push(MistakesScreenVoyager) },
+                onFavoritesClick = { navigator.push(FavoritesScreenVoyager) }
             )
             DailyChallengeCard()
         }

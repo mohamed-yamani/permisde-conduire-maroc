@@ -1,5 +1,6 @@
 package com.permis.permisdeconduiremaroc
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -11,10 +12,15 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.CurrentScreen
+import cafe.adriel.voyager.navigator.Navigator
 import com.permis.permisdeconduiremaroc.ui.components.TopBar
 import com.permis.permisdeconduiremaroc.ui.navigation.ContentFor
+import com.permis.permisdeconduiremaroc.ui.navigation.HomeScreenVoyager
 import com.permis.permisdeconduiremaroc.ui.navigation.NavigationDrawr
 import com.permis.permisdeconduiremaroc.ui.navigation.navItems
+import com.permis.permisdeconduiremaroc.ui.screens.HomeScreen
 import com.permis.permisdeconduiremaroc.ui.theme.AppFontFamily
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -23,7 +29,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
 
 
-    MaterialTheme (
+    MaterialTheme(
         typography = MaterialTheme.typography.let { t ->
             t.copy(
                 displayLarge = t.displayLarge.copy(fontFamily = AppFontFamily),
@@ -45,51 +51,28 @@ fun App() {
         }
     ) {
 
+        var selectedItem by remember { mutableStateOf(navItems[0]) }
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
         val scope = rememberCoroutineScope()
 
 
-
-        var selectedItem by remember { mutableStateOf(navItems[0]) }
-
-        val onNavigate: (String) -> Unit = { destination ->
-            val navItem = navItems.find { it.title == destination }
-            if (navItem != null) {
-                selectedItem = navItem
-            }
+        val homeScreen = remember {
+            HomeScreenVoyager(
+                drawerState = drawerState,
+                scope = scope,
+                getSelectedItem = { selectedItem },
+                onSelectedItemChange = { item ->
+                    selectedItem = item
+                }
+            )
         }
 
-        ModalNavigationDrawer(
-            drawerState = drawerState,
-            drawerContent = {
-                NavigationDrawr(
-                    scope = scope,
-                    drawerState = drawerState,
-                    navItems = navItems,
-                    selectedItem = selectedItem,
-                    onItemClick = { item ->
-                        selectedItem = item
-                    }
-                )
-            }
-        ) {
-            Scaffold(
-                topBar = { TopBar(
-                    scope = scope,
-                    drawerState = drawerState,
-                    selectedItem = selectedItem,
-                ) }
-            ) { paddingValues ->
-                Column(modifier = Modifier.padding(paddingValues)) {
-                    ContentFor(selectedItem.title, onNavigate)
-                }
-            }
+        Navigator(homeScreen) { navigator ->
+            CurrentScreen()
         }
     }
-
-
 }
+
 
 @Preview
 @Composable

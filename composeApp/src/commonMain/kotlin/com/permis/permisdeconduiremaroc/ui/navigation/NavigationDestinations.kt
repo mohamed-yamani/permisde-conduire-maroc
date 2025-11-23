@@ -5,5 +5,8 @@ object NavigationDestinations {
     const val COURSES = "Cours"
     const val QCM = "QCM"
     const val SETTINGS = "Paramètres"
+    // New screens (not in drawer)
+    const val SIGNS = "signs"
+    const val MISTAKES = "mistakes"
+    const val FAVORITES = "favorites"
 }
-
