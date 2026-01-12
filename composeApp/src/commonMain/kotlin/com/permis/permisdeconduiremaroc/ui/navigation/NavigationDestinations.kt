@@ -9,4 +9,6 @@ object NavigationDestinations {
     const val SIGNS = "signs"
     const val MISTAKES = "mistakes"
     const val FAVORITES = "favorites"
+
+    const val COURSEDETAILS = "courseDetails"
 }

@@ -1,9 +1,7 @@
 package com.permis.permisdeconduiremaroc.ui.viewmodel
 
 import androidx.compose.material3.DrawerValue
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import com.permis.permisdeconduiremaroc.ui.navigation.NavItem
 import com.permis.permisdeconduiremaroc.ui.state.AppState
 import androidx.compose.runtime.State
@@ -49,12 +47,5 @@ class AppViewModel {
      */
     fun reset() {
         _state.value = AppState.Default
-    }
-}
-
-@Composable
-fun rememberAppViewModel(): AppViewModel {
-    return remember {
-        AppViewModel()
     }
 }

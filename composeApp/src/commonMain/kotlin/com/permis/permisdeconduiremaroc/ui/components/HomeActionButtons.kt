@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material3.Button
@@ -32,7 +33,7 @@ fun HomeActionButtons(
             onClick = onCoursesClick,
             content = {
                 Icon(
-                    Icons.Filled.MenuBook,
+                    Icons.AutoMirrored.Filled.MenuBook,
                     contentDescription = AppStrings.CD_COURSES_ICON
                 )
                 Spacer(Modifier.width(8.dp))

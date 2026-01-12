@@ -46,5 +46,7 @@ object AppStrings {
     const val SCREEN_COURSES = "Cours du Code"
     const val SCREEN_QCM = "QCM entraînement"
     const val SCREEN_SETTINGS = "Paramètres"
+
+    const val COURSEDETAILS = "Details du cours"
 }
 
